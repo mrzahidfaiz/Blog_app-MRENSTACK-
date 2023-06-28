@@ -3,6 +3,7 @@ const bcrypt = require("bcryptjs");
 const Joi = require("joi");
 const UserDTO = require("../dto/user");
 const JWTService = require("../services/JWTService");
+const RefreshSchema = require("../models/token");
 
 const passwordPattren = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,25}$/;
 
@@ -51,7 +52,6 @@ const authController = {
 
     const hashPassword = await bcrypt.hash(password, 10);
 
-
     let accessToken;
     let refreshToken;
     let user;
@@ -65,23 +65,22 @@ const authController = {
 
       user = await newUser.save();
 
-      accessToken = JWTService.signAccessToken({_id: user._id}, '30m');
-      refreshToken = JWTService.signRefreshToken({_id: user._id}, '60m');
-
+      accessToken = JWTService.signAccessToken({ _id: user._id }, "30m");
+      refreshToken = JWTService.signRefreshToken({ _id: user._id }, "60m");
     } catch (error) {
       return next(error);
     }
 
     await JWTService.storeRefreshToken(refreshToken, user._id);
 
-    res.cookie('accessToken', accessToken, {
+    res.cookie("accessToken", accessToken, {
       maxAge: 1000 * 60 * 60 * 24,
-      httpOnly: true
+      httpOnly: true,
     });
 
-    res.cookie('refreshToken', refreshToken, {
+    res.cookie("refreshToken", refreshToken, {
       maxAge: 1000 * 60 * 60 * 24,
-      httpOnly: true
+      httpOnly: true,
     });
 
     const UserDto = new UserDTO(user);
@@ -129,6 +128,39 @@ const authController = {
       return next(error);
     }
 
+    let accessToken;
+    let refreshToken;
+    try {
+
+
+     accessToken = JWTService.signAccessToken({ _id: user._id }, "30m");
+     refreshToken = JWTService.signRefreshToken({ _id: user._id }, "60m");
+
+      await RefreshSchema.updateOne(
+        {
+          _id: user._id,
+        },
+        {
+          token: refreshToken,
+        },
+        {
+          upsert: true,
+        }
+      );
+    } catch (error) {
+      return next(error);
+    }
+
+    res.cookie("accessToken", accessToken, {
+      maxAge: 1000 * 60 * 60 * 24,
+      httpOnly: true,
+    });
+
+    res.cookie("refreshToken", refreshToken, {
+      maxAge: 1000 * 60 * 60 * 24,
+      httpOnly: true,
+    });
+
     const UserDto = new UserDTO(user);
 
     return res
@@ -137,9 +169,7 @@ const authController = {
   },
 
   logout(req, res, next) {
-
-    res.status(200).json({user: null, auth: false})
-
+    res.status(200).json({ user: null, auth: false });
   },
 };
 
