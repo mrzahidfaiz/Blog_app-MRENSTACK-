@@ -131,7 +131,7 @@ const index = () => {
           </div>
 
           <div className="flex items-center">
-            <input type="checkbox" id="agree" />
+            <input type="checkbox" id="agree" required />
             <label htmlFor="agree" className="ml-2 text-gray-700 text-sm">
               I agree to the terms and privacy.
             </label>
@@ -139,7 +139,7 @@ const index = () => {
 
           <button
             onClick={registerApiHandler}
-            className="block w-full bg-yellow-400 hover:bg-yellow-300 p-4 rounded text-yellow-900 hover:text-yellow-800 transition duration-300"
+            className="block w-full bg-gray-600 hover:bg-gray-800 p-4 rounded text-white transition duration-300"
           >
             Sign Up
           </button>

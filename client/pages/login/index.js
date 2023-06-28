@@ -5,8 +5,11 @@ import { useFormik } from "formik";
 import { login } from "../api/internalApi";
 import { setUser } from "../../store/userSlice";
 import { useDispatch } from "react-redux";
+import { useRouter } from 'next/navigation'
 
 const index = () => {
+
+  const navigate = useRouter();
 
   const dispatch = useDispatch();
 
@@ -29,7 +32,7 @@ const index = () => {
       password: values.password
     }
 
-    const response = login(data);
+    const response = await login(data);
     if(response.status === 200){
       const user = {
         _id: response.data.user._id,
@@ -40,6 +43,8 @@ const index = () => {
         message: response.data.message,
       }
       dispatch(setUser(user));
+
+      navigate.push('/');
     }else if(response.code === 'ERR_BAD_REQUEST'){
       setError(response.response.data.errormessage)
     }
@@ -59,6 +64,7 @@ const index = () => {
             <Input
               type="username"
               name="username"
+              autoComplete="on"
               value={values.username}
               onBlur={handleBlur}
               onChange={handleChange}
@@ -74,6 +80,7 @@ const index = () => {
             <Input
             type="password"
             name="password"
+            autoComplete="on"
             value={values.password}
             onBlur={handleBlur}
             onChange={handleChange}
@@ -81,8 +88,8 @@ const index = () => {
             errormessage={errors.password}
             />
           </div>
-          <button onClick={loginApiHandler} className="block w-full bg-yellow-400 hover:bg-yellow-300 p-4 rounded text-yellow-900 hover:text-yellow-800 transition duration-300">
-            login
+          <button onClick={loginApiHandler} className="block w-full text-white bg-gray-600 hover:bg-gray-800 p-4 rounded text-white-900  transition duration-300">
+            Login 
           </button>
         </form>
         {error !== "" ? <p className="text-sm text-red-500">{error}</p> : ""}
