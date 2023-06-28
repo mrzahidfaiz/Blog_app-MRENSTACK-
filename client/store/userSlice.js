@@ -23,9 +23,17 @@ export const userSlice = createSlice({
       state.auth = auth;
       state.message = message;
     },
+    logoutUser(state) {
+      state._id = '';
+      state.name = '';
+      state.email = '';
+      state.username = '';
+      state.auth = '';
+      state.message = '';
+    }
   },
 });
 
-export const {setUser} = userSlice.actions;
+export const {setUser, logoutUser} = userSlice.actions;
 
 export default userSlice.reducer;

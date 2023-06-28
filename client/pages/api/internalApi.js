@@ -28,3 +28,13 @@ export const login = async (data) => {
     }
     return response;
 };
+
+export const logout = async () => {
+    let response;
+    try {
+        response = await api.post("/logout")
+    } catch (error) {
+        return error;       
+    }
+    return response;
+};

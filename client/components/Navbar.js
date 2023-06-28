@@ -1,13 +1,28 @@
 import Link from "next/link";
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import { logoutUser } from "../store/userSlice";
+import { useDispatch } from "react-redux";
+import { logout } from "../pages/api/internalApi";
 
 export default function Navbar() {
-  const isAuth = false;
+  const dispatch = useDispatch();
+
+  const isAuth = useSelector((state) => state.user.auth);
 
   const [navbar, setNavbar] = useState(false);
 
+  const logoutHandler = async () => {
+    const response = await logout();
+    if (response.status === 200) {
+      dispatch(logoutUser());
+    } else if (response.code === "ERR_BAD_REQUEST") {
+      console.log(response.response.data.errormessage);
+    }
+  };
+
   return (
-    <nav className="w-full bg-blue-400 shadow sticky top-0 ">
+    <nav className="w-full bg-blue-400 shadow sticky top-0 z-10 overflow-hidden ">
       <div className="justify-between px-4 mx-auto lg:max-w-7xl md:items-center md:flex md:px-8">
         <div>
           <div className="flex items-center justify-between py-3 md:py-5 md:block">
@@ -76,13 +91,16 @@ export default function Navbar() {
             <div className="mt-3 space-y-2 lg:hidden md:inline-block">
               {isAuth ? (
                 <>
-                <Link
-                  href=""
-                  className="inline-block w-full px-4 py-2 text-center text-white bg-gray-600 rounded-md shadow hover:bg-gray-800"
-                >
-                  SignOut
-                </Link>
-                <div className="w-full text-center text-white">copyright &copy; 2023</div>
+                  <Link
+                    href=""
+                    onClick={logoutHandler}
+                    className="inline-block w-full px-4 py-2 text-center text-white bg-gray-600 rounded-md shadow hover:bg-gray-800"
+                  >
+                    SignOut
+                  </Link>
+                  <div className="w-full text-center text-white">
+                    copyright &copy; 2023
+                  </div>
                 </>
               ) : (
                 <>
@@ -98,7 +116,9 @@ export default function Navbar() {
                   >
                     Sign up
                   </Link>
-                 <div className="w-full text-center text-white">copyright &copy; 2023</div>
+                  <div className="w-full text-center text-white">
+                    copyright &copy; 2023
+                  </div>
                 </>
               )}
             </div>
@@ -108,6 +128,7 @@ export default function Navbar() {
           {isAuth ? (
             <Link
               href=""
+              onClick={logoutHandler}
               className="px-4 py-2 text-center text-white bg-gray-600  hover:bg-gray-800 transition duration-300 rounded-md shadow "
             >
               SignOut

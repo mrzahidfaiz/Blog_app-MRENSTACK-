@@ -115,6 +115,12 @@ const authController = {
       .status(200)
       .json({ user: UserDto, auth: true, message: "User Successfully Login" });
   },
+
+  logout(req, res, next) {
+
+    res.status(200).json({user: null, auth: false})
+
+  },
 };
 
 module.exports = authController;
