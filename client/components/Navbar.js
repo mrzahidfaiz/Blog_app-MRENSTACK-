@@ -78,7 +78,7 @@ export default function Navbar() {
                 <Link href="/">Home</Link>
               </li>
               <li className="text-white hover:text-indigo-200 text-center">
-                <Link href="/blog">Blog</Link>
+                <Link href="/blogs">Blog</Link>
               </li>
               <li className="text-white hover:text-indigo-200 text-center">
                 <Link href="/createBlog">Create a Blog</Link>
