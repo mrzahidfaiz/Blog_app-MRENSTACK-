@@ -2,6 +2,7 @@ const User = require("../models/user");
 const bcrypt = require("bcryptjs");
 const Joi = require("joi");
 const UserDTO = require("../dto/user");
+const JWTService = require("../services/JWTService");
 
 const passwordPattren = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,25}$/;
 
@@ -50,6 +51,9 @@ const authController = {
 
     const hashPassword = await bcrypt.hash(password, 10);
 
+
+    let accessToken;
+    let refreshToken;
     let user;
     try {
       const newUser = new User({
@@ -60,9 +64,25 @@ const authController = {
       });
 
       user = await newUser.save();
+
+      accessToken = JWTService.signAccessToken({_id: user._id}, '30m');
+      refreshToken = JWTService.signRefreshToken({_id: user._id}, '60m');
+
     } catch (error) {
       return next(error);
     }
+
+    await JWTService.storeRefreshToken(refreshToken, user._id);
+
+    res.cookie('accessToken', accessToken, {
+      maxAge: 1000 * 60 * 60 * 24,
+      httpOnly: true
+    });
+
+    res.cookie('refreshToken', refreshToken, {
+      maxAge: 1000 * 60 * 60 * 24,
+      httpOnly: true
+    });
 
     const UserDto = new UserDTO(user);
 

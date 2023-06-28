@@ -6,19 +6,19 @@ const {
 } = require("../config/index");
 
 class JWTService {
-  signAccessToken(payload, expriyTime) {
+  static signAccessToken(payload, expriyTime) {
     return jwt.sign(payload, SECRET_ACCESS_TOKEN, { expiresIn: expriyTime });
   }
-  signRefreshToken(payload, expriyTime) {
+  static signRefreshToken(payload, expriyTime) {
     return jwt.sign(payload, SECRET_REFRESH_TOKEN, { expiresIn: expriyTime });
   }
-  verifyAccessToken(token) {
+  static verifyAccessToken(token) {
     return jwt.verify(token, SECRET_ACCESS_TOKEN);
   }
-  verifyRefreshToken(token) {
+  static verifyRefreshToken(token) {
     return jwt.verify(token, SECRET_Refresh_TOKEN);
   }
-  async storeRefreshToken(token, userId) {
+  static async storeRefreshToken(token, userId) {
     try {
       const newToken = new RefreshSchema({
         token: token,
