@@ -3,7 +3,8 @@ const {PORT, FRONT_END_CLIENT_PATH} = require('./config/index');
 const router = require('./routes/routes');
 const errorHandler = require('./middlewares/errorHandler');
 const dbConnection = require('./database');
-const cors = require('cors')
+const cors = require('cors');
+const cookieParser = require('cookie-parser');
 
 const app = express();
 
@@ -17,6 +18,7 @@ const corsOption = {
 
 app.use(cors(corsOption));
 
+app.use(cookieParser())
 app.use(router);
 
 app.use(errorHandler);

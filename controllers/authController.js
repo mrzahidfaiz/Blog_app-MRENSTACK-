@@ -131,10 +131,8 @@ const authController = {
     let accessToken;
     let refreshToken;
     try {
-
-
-     accessToken = JWTService.signAccessToken({ _id: user._id }, "30m");
-     refreshToken = JWTService.signRefreshToken({ _id: user._id }, "60m");
+      accessToken = JWTService.signAccessToken({ _id: user._id }, "30m");
+      refreshToken = JWTService.signRefreshToken({ _id: user._id }, "60m");
 
       await RefreshSchema.updateOne(
         {
@@ -168,7 +166,18 @@ const authController = {
       .json({ user: UserDto, auth: true, message: "User Successfully Login" });
   },
 
-  logout(req, res, next) {
+  async logout(req, res, next) {
+    const { refreshToken } = req.cookies;
+
+    try {
+      await RefreshSchema.deleteOne({ token: refreshToken });
+    } catch (error) {
+      return next(error);
+    }
+
+    res.clearCookie("accessToken");
+    res.clearCookie("refreshToken");
+
     res.status(200).json({ user: null, auth: false });
   },
 };
