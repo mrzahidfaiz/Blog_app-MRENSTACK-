@@ -12,4 +12,6 @@ router.post('/login', login);
 
 router.post('/logout',auth, logout);
 
+router.get('/refresh', refresh);
+
 module.exports = router;

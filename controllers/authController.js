@@ -180,6 +180,67 @@ const authController = {
 
     res.status(200).json({ user: null, auth: false });
   },
+
+  async refresh(req, res, next) {
+    const originalRefreshToken = req.cookies.refreshToken;
+
+    let id;
+    try {
+      id =   JWTService.verifyRefreshToken(originalRefreshToken)._id;
+    } catch (e) {
+      const error = {
+        status: 401,
+        message: "Unauthorized",
+      };
+      return next(error);
+    }
+
+    try {
+      const match = await RefreshSchema.findOne({
+        _id: id,
+        token: originalRefreshToken,
+      });
+      if (!match) {
+        const error = {
+          status: 401,
+          message: "Unauthorized",
+        };
+        return next(error);
+      }
+    } catch (error) {
+      return next(error);
+    }
+
+    try {
+      const accessToken = JWTService.signAccessToken({ _id: id }, "30m");
+      const refreshToken = JWTService.signRefreshToken({ _id: id }, "60m");
+
+      await RefreshSchema.updateOne({ _id: id }, { token: refreshToken });
+
+      res.cookie("accessToken", accessToken, {
+        maxAge: 1000 * 60 * 60 * 24,
+        httpOnly: true,
+      });
+
+      res.cookie("refreshToken", refreshToken, {
+        maxAge: 1000 * 60 * 60 * 24,
+        httpOnly: true,
+      });
+    } catch (error) {
+      return next(error);
+    }
+
+    let user;
+    try {
+      user = await User.findOne({ _id: id });
+    } catch (error) {
+      return next(error);
+    }
+
+    const UserDto = new UserDTO(user);
+
+    res.status(200).json({ user: UserDto , auth: true});
+  },
 };
 
 module.exports = authController;
