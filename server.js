@@ -11,14 +11,17 @@ const app = express();
 dbConnection();
 
 app.use(express.json())
-
+app.use(cookieParser())
 const corsOption = {
-    origin: FRONT_END_CLIENT_PATH
+    origin: FRONT_END_CLIENT_PATH,
+    credentials: true
 }
+
+
 
 app.use(cors(corsOption));
 
-app.use(cookieParser())
+
 app.use(router);
 
 app.use(errorHandler);
