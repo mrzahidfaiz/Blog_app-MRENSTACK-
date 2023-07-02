@@ -10,6 +10,7 @@ const blogController = {
   async create(req, res, next) {
     const blogSchema = Joi.object({
       title: Joi.string().required(),
+      description: Joi.string().required(),
       content: Joi.string().required(),
       author: Joi.string().regex(mongodbIdPattren).required(),
       photo: Joi.string().required(),
@@ -20,7 +21,7 @@ const blogController = {
       return next(error);
     }
 
-    const { title, content, author, photo } = req.body;
+    const { title, content, author, photo, description } = req.body;
 
     const buffer = Buffer.from(
       photo.replace(/^data:image\/(png|jgp|jpeg);base64,/, ""),
@@ -39,6 +40,7 @@ const blogController = {
     try {
       const newBlog = new Blog({
         title: title,
+        description: description,
         content: content,
         author: author,
         photoPath: `${BACKEND_SERVER_PATH}/upload/${imagePath}`,

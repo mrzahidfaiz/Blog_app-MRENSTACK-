@@ -14,7 +14,7 @@ const index = () => {
   const [content, setContent] = useState("");
   const [photo, setPhoto] = useState("");
 
-  console.log(photo);
+  // console.log(photo);
   const photoHandler = (e) => {
     const file = e.target.files[0];
     const reader = new FileReader();
@@ -27,6 +27,7 @@ const index = () => {
   const submitHandler = async () => {
     const data = {
       title,
+      description,
       content,
       photo,
       author: authorId,
@@ -69,7 +70,7 @@ const index = () => {
             type="text"
             placeholder="Description"
             value={description}
-            onChange={(e) => setTitle(e.target.value)}
+            onChange={(e) => setDescription(e.target.value)}
           />
         </div>
         <div>
