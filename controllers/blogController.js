@@ -50,7 +50,24 @@ const blogController = {
 
     return res.status(201).json({blog: BlogDto, message: 'Successfully Created'});
   },
-  async getAll() {},
+  
+  async getAll(req, res, next) {
+
+    let allBlogs;
+    
+      const blogs = await Blog.find({});
+      console.log(blogs)
+
+       allBlogs = []
+
+      for(let i = 0; i < blogs.length; i++){
+        const dto = new BlogDTO(blogs[i]);
+        console.log("server", dto)
+        allBlogs.push(dto)
+      }
+   
+    return res.status(200).json({blog: allBlogs})
+  },
   async getById() {},
   async update() {},
   async deleteById() {},

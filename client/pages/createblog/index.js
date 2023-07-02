@@ -32,6 +32,10 @@ const index = () => {
     if (response.status === 201) {
       console.log(response);
     }
+    if (response.code === "ERR_BAD_REQUEST") {
+      alert(response.response.statusText);
+      alert("User must be login first");
+    }
   };
 
   return (
