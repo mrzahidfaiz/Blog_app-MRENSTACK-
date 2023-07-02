@@ -57,3 +57,13 @@ export const getAllBlogs = async () => {
   }
   return response;
 }
+
+export const getById = async (id) => {
+  let response;
+  try {
+    response = await api.get(`/blog/${id}`);
+  } catch (error) {
+    return error;
+  }
+  return response;
+}

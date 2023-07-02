@@ -2,12 +2,15 @@ import React, { useEffect, useState } from "react";
 import Input from "@/components/Input";
 import { create } from "../api/internalApi";
 import { useSelector } from "react-redux";
+import { useRouter } from "next/router";
 
 const index = () => {
+  const router = useRouter();
   const authorId = useSelector((state) => state.user._id);
 
   console.log(authorId);
   const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
   const [content, setContent] = useState("");
   const [photo, setPhoto] = useState("");
 
@@ -30,7 +33,7 @@ const index = () => {
     };
     const response = await create(data);
     if (response.status === 201) {
-      console.log(response);
+      router.push('/blogs')
     }
     if (response.code === "ERR_BAD_REQUEST") {
       alert(response.response.statusText);
@@ -42,6 +45,12 @@ const index = () => {
     <div className="p-12">
       <div className="flex flex-col gap-4 content-center mt-16">
         <div>
+        <label
+            htmlFor="message"
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >
+            Title
+          </label>
           <Input
             type="text"
             placeholder="Title"
@@ -50,11 +59,34 @@ const index = () => {
           />
         </div>
         <div>
+        <label
+            htmlFor="message"
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >
+            Description
+          </label>
           <Input
             type="text"
-            placeholder="Content"
+            placeholder="Description"
+            value={description}
+            onChange={(e) => setTitle(e.target.value)}
+          />
+        </div>
+        <div>
+          <label
+            htmlFor="message"
+            className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >
+            Content
+          </label>
+          <textarea
+            id="message"
+            rows={4}
             value={content}
             onChange={(e) => setContent(e.target.value)}
+            className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="Write your thoughts here..."
+            defaultValue={""}
           />
         </div>
         {photo != "" ? (
