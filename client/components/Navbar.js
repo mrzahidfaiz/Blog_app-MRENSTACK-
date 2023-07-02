@@ -4,9 +4,11 @@ import { useSelector } from "react-redux";
 import { logoutUser } from "../store/userSlice";
 import { useDispatch } from "react-redux";
 import { logout } from "../pages/api/internalApi";
+import { useRouter } from "next/router";
 
 export default function Navbar() {
   const dispatch = useDispatch();
+  const router = useRouter();
 
   const isAuth = useSelector((state) => state.user.auth);
 
@@ -81,7 +83,7 @@ export default function Navbar() {
                 <Link href="/blogs">Blog</Link>
               </li>
               <li className="text-white hover:text-indigo-200 text-center">
-                <Link href="/createBlog">Create a Blog</Link>
+                <Link href="/createblog">Create a Blog</Link>
               </li>
               <li className="text-white hover:text-indigo-200 text-center">
                 <Link href="/contact">Contact US</Link>
