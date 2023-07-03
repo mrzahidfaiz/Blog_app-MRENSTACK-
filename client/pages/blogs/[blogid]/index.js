@@ -18,7 +18,7 @@ const index = () => {
         console.log(response.response);
       }
     })();
-  }, []);
+  });
 
   const deleteBlogHandler = async () => {
     const response = await deleteById(blogid);
@@ -46,7 +46,7 @@ const index = () => {
                   href="#"
                   className="py-2 text-green-700 inline-flex items-center justify-center mb-2"
                 >
-                  Cryptocurrency
+                  {blog._id}
                 </a>
               </div>
               <img
@@ -68,14 +68,14 @@ const index = () => {
                     />
                     <div>
                       <p className="font-semibold text-gray-700 text-sm">
-                        {blog._id}
+                        {blog.authorname}
                       </p>
                       <p className="font-semibold text-gray-600 text-xs">
-                        Editor
+                        {blog.authorusername}
                       </p>
                     </div>
                   </div>
-                  <p className="text-gray-700 py-3">XYZ</p>
+                  {/* <p className="text-gray-700 py-3">XYZ</p> */}
                   <button className="px-2 py-1 text-gray-100 bg-gray-700 flex w-full items-center justify-center rounded">
                     Follow
                     <i className="bx bx-user-plus ml-2" />

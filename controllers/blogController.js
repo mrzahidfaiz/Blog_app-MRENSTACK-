@@ -3,6 +3,7 @@ const Blog = require("../models/blog");
 const fs = require("fs");
 const { BACKEND_SERVER_PATH } = require("../config/index");
 const BlogDTO = require("../dto/blog");
+const BlogDetailDTO = require("../dto/blogDetail");
 
 const mongodbIdPattren = /^[0-9a-fA-F]{24}$/;
 
@@ -86,14 +87,14 @@ const blogController = {
 
     let blog;
     try {
-      blog = await Blog.findOne({ _id: id });
+      blog = await Blog.findOne({ _id: id }).populate('author');
     } catch (error) {
       return next(error);
     }
 
-    const BlogDto = new BlogDTO(blog);
+    const BlogDetailDto = new BlogDetailDTO(blog);
 
-    return res.status(200).json({ blog: BlogDto });
+    return res.status(200).json({ blog: BlogDetailDto });
   },
   async update(req, res, next) {
     const updateBlogSchema = Joi.object({
