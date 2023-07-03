@@ -46,7 +46,8 @@ const index = () => {
 
       navigate.push('/');
     }else if(response.code === 'ERR_BAD_REQUEST'){
-      setError(response.response.data.errormessage)
+      console.log(response.response);
+      setError(response.response.data.message)
     }
   }
   return (
@@ -92,7 +93,7 @@ const index = () => {
             Login 
           </button>
         </form>
-        {error !== "" ? <p className="text-sm text-red-500">{error}</p> : ""}
+        {error !== "" ? <p className="text-sm text-red-500 mt-6">{error}</p> : ""}
       </div>
     </div>
   );

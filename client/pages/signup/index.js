@@ -5,11 +5,13 @@ import { useDispatch } from "react-redux";
 import Input from "../../components/Input";
 import signupSchema from "../../schemas/signupSchema";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 const index = () => {
   const dispatch = useDispatch();
+  const navigate = useRouter();
 
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   const { values, touched, handleBlur, handleChange, errors } = useFormik({
     initialValues: {
@@ -42,8 +44,10 @@ const index = () => {
         message: response.data.message,
       };
       dispatch(setUser(user));
+      alert(response.data.message);
+      navigate.push("/");
     } else if (response.code === "ERR_BAD_REQUEST") {
-      setError(response.response.data.errormessage);
+      setError(response.response.data.message);
     }
   };
   return (
@@ -144,7 +148,11 @@ const index = () => {
             Sign Up
           </button>
         </form>
-        {error !== "" ? <p className="text-red-500 text-sm">{error}</p>: ""}
+        {error !== "" ? (
+          <p className="text-red-500 text-sm m-6 ">{error}</p>
+        ) : (
+          ""
+        )}
       </div>
     </div>
   );

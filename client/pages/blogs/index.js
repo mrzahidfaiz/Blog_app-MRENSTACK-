@@ -32,7 +32,7 @@ const index = () => {
         <div className="flex flex-wrap -m-4">
           {blogs.map((blog) => {
             return (
-              <div key={blog._id} className="p-4 md:w-1/3">
+              <div key={blog._id} className="p-4 md:w-1/3 hover:shadow-md hover:bg-slate-50 hover:rounded-lg hover:cursor-pointer">
                 <div className="h-full border-2 border-gray-200 border-opacity-60 rounded-lg overflow-hidden ">
                   <img
                     className="lg:h-48 md:h-36 w-full object-cover object-center"

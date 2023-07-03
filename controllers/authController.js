@@ -17,7 +17,11 @@ const authController = {
       email: Joi.string().email().required(),
       password: Joi.string()
         .pattern(passwordPattren)
-        .message(passwordMessage)
+        .messages({
+          "string.min": "Must have at least 8 characters",
+          "object.regex": "Must have at least 8 characters",
+          "string.pattern.base": "One UpperCase One LowerCase and One Number Required!"
+        })
         .required(),
       confirmpassword: Joi.ref("password"),
     });
@@ -95,7 +99,11 @@ const authController = {
   async login(req, res, next) {
     const userLoginSchema = Joi.object({
       username: Joi.string().min(6).max(25).required(),
-      password: Joi.string().pattern(passwordPattren).required(),
+      password: Joi.string().pattern(passwordPattren).messages({
+        "string.min": "Must have at least 8 characters",
+        "object.regex": "Must have at least 8 characters",
+        "string.pattern.base": "One UpperCase One LowerCase and One Number Required!"
+      }).required(),
     });
 
     const { error } = userLoginSchema.validate(req.body);
