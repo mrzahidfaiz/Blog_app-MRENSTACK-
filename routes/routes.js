@@ -17,14 +17,14 @@ router.get('/refresh', refresh);
 
 // Blogs
 
-router.post('/blog', create);
+router.post('/blog',auth, create);
 
-router.get('/blog/all', getAll);
+router.get('/blog/all',auth, getAll);
 
-router.get('/blog/:id', getById);
+router.get('/blog/:id',auth, getById);
 
-router.put('/blog', update);
+router.put('/blog',auth, update);
 
-router.delete('/blog/:id', deleteById);
+router.delete('/blog/:id',auth, deleteById);
 
 module.exports = router;

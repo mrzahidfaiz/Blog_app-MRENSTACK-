@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getAllBlogs } from "../api/internalApi";
 import { useRouter } from "next/router";
-import loading from "@/components/loading";
+import Loading from "@/components/Loading";
 
 const index = () => {
 
@@ -14,7 +14,7 @@ const index = () => {
       if (response.status === 200) {
         setBlogs(response.data.blog);
       } else if (response.code === "ERR_BAD_REQUEST") {
-        console.log(response.response);
+        alert(response.response.data.message)
       }
     })();
 
@@ -22,7 +22,7 @@ const index = () => {
   }, []);
 
   if(blogs.length === 0){
-    return <loading />
+    return <Loading />
   }
 
   // console.log(blogs);

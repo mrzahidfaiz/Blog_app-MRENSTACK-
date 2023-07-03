@@ -15,10 +15,10 @@ const index = () => {
         // console.log(response);
         setBlog(response.data.blog);
       } else if (response.code === "ERR_BAD_REQUEST") {
-        console.log(response.response.errormessage);
+        alert(response.response.data.message);
       }
     })();
-  });
+  }, []);
 
   const deleteBlogHandler = async () => {
     const response = await deleteById(blogid);
@@ -26,7 +26,7 @@ const index = () => {
       alert(response.data.message);
       router.push('/blogs')
     } else if (response.code === "ERR_BAD_REQUEST") {
-      console.log(response.response.errormessage);
+      alert(response.response.data.message);
     }
   };
 

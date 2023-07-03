@@ -87,3 +87,9 @@ export const deleteById = async (id) => {
   }
   return response;
 };
+
+api.interceptors.response.use(
+  (response) => {
+    return response
+  },
+)

@@ -1,13 +1,13 @@
 import "@/styles/globals.css";
 import { Provider } from "react-redux";
-import {store, wrapper} from "@/store/store";
+import store from "@/store/store";
 import Navbar from "@/components/Navbar";
 import useAutoLogin from "@/hooks/useAutoLogin";
 
-function App({ Component, pageProps }) {
+export default function App({ Component, pageProps }) {
   const loading = useAutoLogin();
-
-  return loading ? "" : (
+  // loading ? "" : 
+  return (
     <>
       <Provider store={store}>
         <Navbar />
@@ -17,4 +17,4 @@ function App({ Component, pageProps }) {
   );
 }
 
-export default wrapper.withRedux(App);
+// export default App;

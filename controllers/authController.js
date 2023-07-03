@@ -175,6 +175,7 @@ const authController = {
   },
 
   async logout(req, res, next) {
+    // console.log(req);
     const { refreshToken } = req.cookies;
 
     try {
