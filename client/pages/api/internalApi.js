@@ -77,3 +77,13 @@ export const update = async (data) => {
   }
   return response;
 };
+
+export const deleteById = async (id) => {
+  let response;
+  try {
+    response = await api.delete(`/blog/${id}`);
+  } catch (error) {
+    return error;
+  }
+  return response;
+};

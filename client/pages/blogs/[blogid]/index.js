@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getById } from "../../api/internalApi";
+import { getById, deleteById } from "../../api/internalApi";
 import { useRouter } from "next/router";
 
 const index = () => {
@@ -19,6 +19,16 @@ const index = () => {
       }
     })();
   }, []);
+
+  const deleteBlogHandler = async () => {
+    const response = await deleteById(blogid);
+    if (response.status === 200) {
+      alert(response.data.message);
+      router.push('/blogs')
+    } else if (response.code === "ERR_BAD_REQUEST") {
+      console.log(response.response.errormessage);
+    }
+  };
 
   // console.log(blog);
   return (
@@ -78,7 +88,10 @@ const index = () => {
                       Edit
                       <i className="bx bx-user-plus ml-2" />
                     </button>
-                    <button className="px-2 py-1 text-gray-100 bg-red-700 flex w-full items-center justify-center rounded">
+                    <button
+                      onClick={deleteBlogHandler}
+                      className="px-2 py-1 text-gray-100 bg-red-700 flex w-full items-center justify-center rounded"
+                    >
                       Delete
                       <i className="bx bx-user-plus ml-2" />
                     </button>

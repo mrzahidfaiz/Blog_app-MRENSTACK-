@@ -100,8 +100,9 @@ const blogController = {
       title: Joi.string().required(),
       description: Joi.string().required(),
       content: Joi.string().required(),
+      author: Joi.string().regex(mongodbIdPattren).required(),
       blogId: Joi.string().regex(mongodbIdPattren).required(),
-      photo: Joi.string()
+      photo: Joi.string(),
     });
 
     const { error } = updateBlogSchema.validate(req.body);
@@ -109,7 +110,7 @@ const blogController = {
       return next(error);
     }
 
-    const { title, description, content,  photo, blogId } = req.body;
+    const { title, description, content, author, photo, blogId } = req.body;
 
     let blog;
     try {

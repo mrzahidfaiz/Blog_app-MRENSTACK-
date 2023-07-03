@@ -2,10 +2,15 @@ import React, { useEffect, useState } from "react";
 import Input from "@/components/Input";
 import { getById, update } from "../../../api/internalApi";
 import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
 
 const index = () => {
   const router = useRouter();
   const { blogid } = router.query;
+
+  const authorId = useSelector((state) => state.user._id);
+
+  console.log(authorId)
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -41,6 +46,7 @@ const index = () => {
         title,
         description,
         content,
+        author: authorId,
         blogId: blogid,
       };
     } else {
@@ -49,6 +55,7 @@ const index = () => {
         description,
         content,
         photo,
+        author: authorId,
         blogId: blogid,
       };
     }
