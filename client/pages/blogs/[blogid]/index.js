@@ -12,7 +12,7 @@ const index = () => {
     (async function getByIdApiCall() {
       const response = await getById(blogid);
       if (response.status === 200) {
-        console.log(response);
+        // console.log(response);
         setBlog(response.data.blog);
       } else if (response.code === "ERR_BAD_REQUEST") {
         console.log(response.response);
@@ -20,7 +20,7 @@ const index = () => {
     })();
   }, []);
 
-  console.log(blog);
+  // console.log(blog);
   return (
     <>
       <>
@@ -71,7 +71,10 @@ const index = () => {
                     <i className="bx bx-user-plus ml-2" />
                   </button>
                   <div className="flex gap-2 p-2">
-                    <button className="px-2 py-1 text-gray-100 bg-green-700 flex w-full items-center justify-center rounded">
+                    <button
+                      onClick={() => router.push(`/blogs/update/${blog._id}`)}
+                      className="px-2 py-1 text-gray-100 bg-green-700 flex w-full items-center justify-center rounded"
+                    >
                       Edit
                       <i className="bx bx-user-plus ml-2" />
                     </button>

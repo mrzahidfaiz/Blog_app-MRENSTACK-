@@ -95,8 +95,85 @@ const blogController = {
 
     return res.status(200).json({ blog: BlogDto });
   },
-  async update() {},
-  async deleteById() {},
+  async update(req, res, next) {
+    const updateBlogSchema = Joi.object({
+      title: Joi.string().required(),
+      description: Joi.string().required(),
+      content: Joi.string().required(),
+      blogId: Joi.string().regex(mongodbIdPattren).required(),
+      photo: Joi.string()
+    });
+
+    const { error } = updateBlogSchema.validate(req.body);
+    if (error) {
+      return next(error);
+    }
+
+    const { title, description, content,  photo, blogId } = req.body;
+
+    let blog;
+    try {
+      blog = await Blog.findOne({ _id: blogId });
+    } catch (error) {
+      return next(error);
+    }
+
+    if (photo) {
+      let previousPhoto = blog.photoPath;
+      previousPhoto = previousPhoto.split("/").at(-1);
+
+      // delete
+      fs.unlinkSync(`upload/${previousPhoto}`);
+      // Buffer from client
+      const buffer = Buffer.from(
+        photo.replace(/^data:image\/(png|jgp|jpeg);base64,/, ""),
+        "base64"
+      );
+      // allot a random name
+      const imagePath = `${Date.now()}_${author}.png`;
+      // store locally in storage folder
+      try {
+        fs.writeFileSync(`upload/${imagePath}`, buffer);
+      } catch (error) {
+        return next(error);
+      }
+      await Blog.updateOne(
+        { _id: blogId },
+        {
+          title,
+          description,
+          content,
+          photoPath: `${BACKEND_SERVER_PATH}/upload/${imagePath}`,
+        }
+      );
+    } else {
+      await Blog.updateOne({ _id: blogId }, { title, content, description });
+    }
+
+    res.status(200).json({ message: "Update Successfuly" });
+  },
+  async deleteById(req, res, next) {
+    const getByIdSchema = Joi.object({
+      id: Joi.string().regex(mongodbIdPattren).required(),
+    });
+
+    const { error } = getByIdSchema.validate(req.params);
+
+    if (error) {
+      return next(error);
+    }
+
+    // 2. search blog by blog._id
+    const { id } = req.params;
+
+    try {
+      await Blog.deleteOne({ _id: id });
+    } catch (error) {
+      return next(error);
+    }
+
+    res.status(200).json({ message: "Delete Successfully" });
+  },
 };
 
 module.exports = blogController;

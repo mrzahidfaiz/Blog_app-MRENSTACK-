@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { getAllBlogs } from "../api/internalApi";
 import { useRouter } from "next/router";
-import Link from "next/link";
 
 const index = () => {
 
@@ -21,6 +20,7 @@ const index = () => {
     setBlogs([]);
   }, []);
 
+  // console.log(blogs);
   return (
     <section className="text-gray-600 body-font">
       <div className="container px-5 py-24 mx-auto">
@@ -42,7 +42,7 @@ const index = () => {
                       {blog.title}
                     </h1>
                     <p className="leading-relaxed mb-3">
-                      {blog.content}
+                      {blog.description}
                     </p>
                     <div className="flex items-center flex-wrap ">
                       <a onClick={() => router.push(`/blogs/${blog._id}`)} className="text-indigo-500 inline-flex items-center md:mb-2 lg:mb-0 cursor-pointer">

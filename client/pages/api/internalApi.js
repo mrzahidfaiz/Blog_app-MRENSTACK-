@@ -51,12 +51,12 @@ export const create = async (data) => {
 export const getAllBlogs = async () => {
   let response;
   try {
-    response = await api.get('/blog/all');
+    response = await api.get("/blog/all");
   } catch (error) {
     return error;
   }
   return response;
-}
+};
 
 export const getById = async (id) => {
   let response;
@@ -66,4 +66,14 @@ export const getById = async (id) => {
     return error;
   }
   return response;
-}
+};
+
+export const update = async (data) => {
+  let response;
+  try {
+    response = await api.put(`/blog`, data);
+  } catch (error) {
+    return error;
+  }
+  return response;
+};

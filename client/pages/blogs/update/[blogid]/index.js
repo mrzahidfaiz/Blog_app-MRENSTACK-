@@ -1,18 +1,28 @@
 import React, { useEffect, useState } from "react";
 import Input from "@/components/Input";
-import { create } from "../api/internalApi";
-import { useSelector } from "react-redux";
+import { getById, update } from "../../../api/internalApi";
 import { useRouter } from "next/router";
 
 const index = () => {
   const router = useRouter();
-  const authorId = useSelector((state) => state.user._id);
+  const { blogid } = router.query;
 
-  console.log(authorId);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [content, setContent] = useState("");
   const [photo, setPhoto] = useState("");
+
+  useEffect(() => {
+    (async function getByIdApiCall() {
+      const response = await getById(blogid);
+      if (response.status === 200) {
+        setTitle(response.data.blog.title);
+        setDescription(response.data.blog.description);
+        setContent(response.data.blog.content);
+        setPhoto(response.data.blog.photoPath);
+      }
+    })();
+  }, []);
 
   // console.log(photo);
   const photoHandler = (e) => {
@@ -24,18 +34,29 @@ const index = () => {
     };
   };
 
-  const submitHandler = async () => {
-    const data = {
-      title,
-      description,
-      content,
-      photo,
-      author: authorId,
-    };
-    const response = await create(data);
-    if (response.status === 201) {
+  const updateHandler = async () => {
+    let data;
+    if (photo.includes("http")) {
+      data = {
+        title,
+        description,
+        content,
+        blogId: blogid,
+      };
+    } else {
+      data = {
+        title,
+        description,
+        content,
+        photo,
+        blogId: blogid,
+      };
+    }
+
+    const response = await update(data);
+    if (response.status === 200) {
       alert(response.data.message);
-      router.push('/blogs');
+      router.push("/blogs");
     }
     if (response.code === "ERR_BAD_REQUEST") {
       alert(response.response.statusText);
@@ -45,10 +66,10 @@ const index = () => {
 
   return (
     <div className="p-10">
-       <h1 className="text-center text-3xl">Submit Blog</h1>
+      <h1 className="text-center text-3xl">Submit Blog</h1>
       <div className="flex flex-col gap-4 content-center mt-16">
         <div>
-        <label
+          <label
             htmlFor="message"
             className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
           >
@@ -62,7 +83,7 @@ const index = () => {
           />
         </div>
         <div>
-        <label
+          <label
             htmlFor="message"
             className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
           >
@@ -137,10 +158,10 @@ const index = () => {
 
         <div>
           <button
-            onClick={submitHandler}
+            onClick={updateHandler}
             className="block w-full bg-gray-600 hover:bg-gray-800 p-4 rounded text-white transition duration-300"
           >
-            Submit
+            Update
           </button>
         </div>
       </div>
