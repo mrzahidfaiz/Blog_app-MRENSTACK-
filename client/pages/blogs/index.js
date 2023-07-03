@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { getAllBlogs } from "../api/internalApi";
 import { useRouter } from "next/router";
+import loading from "@/components/loading";
 
 const index = () => {
 
@@ -19,6 +20,10 @@ const index = () => {
 
     setBlogs([]);
   }, []);
+
+  if(blogs.length === 0){
+    return <loading />
+  }
 
   // console.log(blogs);
   return (

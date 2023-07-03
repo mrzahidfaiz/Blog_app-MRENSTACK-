@@ -165,7 +165,6 @@ const blogController = {
       return next(error);
     }
 
-    // 2. search blog by blog._id
     const { id } = req.params;
 
     try {

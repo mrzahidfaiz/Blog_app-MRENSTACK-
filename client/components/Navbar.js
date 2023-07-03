@@ -86,7 +86,7 @@ export default function Navbar() {
                 <Link href="/createblog">Create a Blog</Link>
               </li>
               <li className="text-white hover:text-indigo-200 text-center">
-                <Link href="/contact">Contact US</Link>
+                <Link href="/contactus">Contact US</Link>
               </li>
             </ul>
 

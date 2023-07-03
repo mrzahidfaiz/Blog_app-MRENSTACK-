@@ -15,7 +15,7 @@ const index = () => {
         // console.log(response);
         setBlog(response.data.blog);
       } else if (response.code === "ERR_BAD_REQUEST") {
-        console.log(response.response);
+        console.log(response.response.errormessage);
       }
     })();
   });
@@ -34,7 +34,6 @@ const index = () => {
   return (
     <>
       <>
-        {/* component */}
         <div className="max-w-screen-lg mx-auto">
           <main className="mt-10">
             <div className="mb-4 md:mb-0 w-full mx-auto relative">
@@ -43,7 +42,7 @@ const index = () => {
                   {blog.title}
                 </h2>
                 <a
-                  href="#"
+                  href=""
                   className="py-2 text-green-700 inline-flex items-center justify-center mb-2"
                 >
                   {blog._id}

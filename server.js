@@ -10,7 +10,7 @@ const app = express();
 
 dbConnection();
 
-app.use(express.json({ limit: "2mb" }));
+app.use(express.json({ limit: "20mb" }));
 app.use(cookieParser());
 const corsOption = {
   origin: FRONT_END_CLIENT_PATH,
