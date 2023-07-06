@@ -16,6 +16,7 @@ const index = () => {
   const [description, setDescription] = useState("");
   const [content, setContent] = useState("");
   const [photo, setPhoto] = useState("");
+  const [category, setCategory] = useState("");
 
   useEffect(() => {
     (async function getByIdApiCall() {
@@ -25,6 +26,7 @@ const index = () => {
         setDescription(response.data.blog.description);
         setContent(response.data.blog.content);
         setPhoto(response.data.blog.photo);
+        setCategory(response.data.blog.category);
       }
     })();
   }, []);
@@ -46,6 +48,7 @@ const index = () => {
         title,
         description,
         content,
+        category,
         author: authorId,
         blogId: blogid,
       };
@@ -54,6 +57,7 @@ const index = () => {
         title,
         description,
         content,
+        category,
         photo,
         author: authorId,
         blogId: blogid,
@@ -102,6 +106,30 @@ const index = () => {
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           />
+        </div>
+        <div>
+            <label
+              htmlFor="countries"
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >
+              Select an option
+            </label>
+            <select
+              id="category"
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            >
+              <option selected="">Choose a Category</option>
+              <option value="Technology">Technology</option>
+              <option value="Movie">Movie</option>
+              <option value="News">News</option>
+              <option value="Business">Business</option>
+              <option value="Personal">Personal</option>
+              <option value="LifeStyle">LifeStyle</option>
+              <option value="Health">Health</option>
+              <option value="Travel">Travel</option>
+            </select>
         </div>
         <div>
           <label

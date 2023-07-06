@@ -13,6 +13,7 @@ const index = () => {
   const [description, setDescription] = useState("");
   const [content, setContent] = useState("");
   const [photo, setPhoto] = useState("");
+  const [category, setCategory] = useState("");
 
   // console.log(photo);
   const photoHandler = (e) => {
@@ -28,6 +29,7 @@ const index = () => {
     const data = {
       title,
       description,
+      category,
       content,
       photo,
       author: authorId,
@@ -35,7 +37,7 @@ const index = () => {
     const response = await create(data);
     if (response.status === 201) {
       alert(response.data.message);
-      router.push('/blogs');
+      router.push("/blogs");
     }
     if (response.code === "ERR_BAD_REQUEST") {
       alert(response.response.statusText);
@@ -45,10 +47,10 @@ const index = () => {
 
   return (
     <div className="p-10">
-       <h1 className="text-center text-3xl">Submit Blog</h1>
+      <h1 className="text-center text-3xl">Submit Blog</h1>
       <div className="flex flex-col gap-4 content-center mt-16">
         <div>
-        <label
+          <label
             htmlFor="message"
             className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
           >
@@ -62,7 +64,7 @@ const index = () => {
           />
         </div>
         <div>
-        <label
+          <label
             htmlFor="message"
             className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
           >
@@ -74,6 +76,30 @@ const index = () => {
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           />
+        </div>
+        <div>
+            <label
+              htmlFor="countries"
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >
+              Select an option
+            </label>
+            <select
+              id="category"
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            >
+              <option selected="">Choose a Category</option>
+              <option value="Technology">Technology</option>
+              <option value="Movie">Movie</option>
+              <option value="News">News</option>
+              <option value="Business">Business</option>
+              <option value="Personal">Personal</option>
+              <option value="LifeStyle">LifeStyle</option>
+              <option value="Health">Health</option>
+              <option value="Travel">Travel</option>
+            </select>
         </div>
         <div>
           <label

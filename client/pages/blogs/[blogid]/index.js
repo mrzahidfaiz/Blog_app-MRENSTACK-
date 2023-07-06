@@ -75,7 +75,7 @@ const index = () => {
                   href=""
                   className="py-2 text-green-700 inline-flex items-center justify-center mb-2"
                 >
-                  {blog._id}
+                  {blog.category}
                 </a>
               </div>
               <img

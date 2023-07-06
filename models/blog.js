@@ -8,7 +8,8 @@ const BlogSchema = new Schema(
     description: { type: String, required: true },
     content: { type: String, required: true },
     photoPath: { type: String, required: true },
-    author: { type: mongoose.SchemaTypes.ObjectId, ref: "User" }
+    author: { type: mongoose.SchemaTypes.ObjectId, ref: "User" },
+    category: { type: String, required: true}
   },
   {
     timestamps: true

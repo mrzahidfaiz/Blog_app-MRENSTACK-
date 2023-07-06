@@ -16,6 +16,7 @@ const blogController = {
       content: Joi.string().required(),
       author: Joi.string().regex(mongodbIdPattren).required(),
       photo: Joi.string().required(),
+      category: Joi.string().required()
     });
 
     const { error } = blogSchema.validate(req.body);
@@ -23,7 +24,7 @@ const blogController = {
       return next(error);
     }
 
-    const { title, content, author, photo, description } = req.body;
+    const { title, content, author, photo, description, category } = req.body;
 
     const buffer = Buffer.from(
       photo.replace(/^data:image\/(png|jgp|jpeg);base64,/, ""),
@@ -45,6 +46,7 @@ const blogController = {
         description: description,
         content: content,
         author: author,
+        category, category,
         photoPath: `${BACKEND_SERVER_PATH}/upload/${imagePath}`,
       });
 
@@ -105,6 +107,7 @@ const blogController = {
       author: Joi.string().regex(mongodbIdPattren).required(),
       blogId: Joi.string().regex(mongodbIdPattren).required(),
       photo: Joi.string(),
+      category: Joi.string().required()
     });
 
     const { error } = updateBlogSchema.validate(req.body);
@@ -112,7 +115,7 @@ const blogController = {
       return next(error);
     }
 
-    const { title, description, content, author, photo, blogId } = req.body;
+    const { title, description, content, author, photo, blogId, category } = req.body;
 
     let blog;
     try {
@@ -146,11 +149,12 @@ const blogController = {
           title,
           description,
           content,
+          category,
           photoPath: `${BACKEND_SERVER_PATH}/upload/${imagePath}`,
         }
       );
     } else {
-      await Blog.updateOne({ _id: blogId }, { title, content, description });
+      await Blog.updateOne({ _id: blogId }, { title, content, description, category });
     }
 
     res.status(200).json({ message: "Update Successfuly" });
