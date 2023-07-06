@@ -101,7 +101,9 @@ export const createComment = async (data) => {
 export const getCommentById = async (id) => {
   let response;
   try {
-    response = await api.get(`/comment/${id}`);
+    response = await api.get(`/comment/${id}` , {
+      validateStatus: false
+    });
   } catch (error) {
     return error;
   }

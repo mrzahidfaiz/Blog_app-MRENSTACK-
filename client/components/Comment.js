@@ -1,8 +1,6 @@
 const Comment = ({comment}) => {
   return (
-    <div className="antialiased mx-auto max-w-screen border-t mt-12 pt-12 pb-12 px-4 lg:px-0">
-    <h3 className="mb-4 text-lg font-semibold text-gray-900">Comments</h3>
-    <div className="space-y-4">
+   
       <div className="flex">
         <div className="flex-shrink-0 mr-3">
           <img
@@ -12,17 +10,13 @@ const Comment = ({comment}) => {
           />
         </div>
         <div className="flex-1 border rounded-lg px-4 py-2 sm:px-6 sm:py-4 leading-relaxed">
-          <strong>Sarah</strong>
-          <span className="text-xs text-gray-400">3:34 PM</span>
+          <strong>{comment.auhtorUsername}</strong>
+          <span className="text-xs text-gray-400 ml-2">3:34 PM</span>
           <p className="text-sm">
-            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-            nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
-            erat, sed diam voluptua.
+          {comment.content}
           </p>
         </div>
       </div>
-    </div>
-  </div>
   )
 };
 

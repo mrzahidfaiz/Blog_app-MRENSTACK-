@@ -29,7 +29,7 @@ const commentController = {
             return next(error);
         }
 
-        return res.status(201).json({messgae: 'comment created'});
+        return res.status(201).json({message: 'comment created'});
     },
     async getById (req, res, next) {
         const getByIdSchema = Joi.object({
@@ -42,28 +42,24 @@ const commentController = {
             return next(error);
         }
         const { id } = req.params;
+       
 
         let comments;
         try {
-            comments = await Comment.findOne({_id: id}).populate('author');
+            comments = await Comment.find({blog: id}).populate('author');
         } catch (error) {
             return next(error);
         }
 
         const CommentsDto = [];
-        try {
-            for(let i = 0; i < comments.lenght; i++){
+
+        for(let i = 0; i < comments.length; i++){
             const dto = new CommentDTO(comments[i]);
             CommentsDto.push(dto);
         }
-        } catch (error) {
-            return next(error)
-        }
-        
 
-        return res.status(200).json({data: CommentsDto});
-
-    }
+        return res.status(200).json({comments: CommentsDto});
+}
 }
 
 module.exports = commentController;

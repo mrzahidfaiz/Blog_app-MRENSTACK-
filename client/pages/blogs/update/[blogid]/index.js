@@ -10,7 +10,7 @@ const index = () => {
 
   const authorId = useSelector((state) => state.user._id);
 
-  console.log(authorId)
+  // console.log(authorId)
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -24,7 +24,7 @@ const index = () => {
         setTitle(response.data.blog.title);
         setDescription(response.data.blog.description);
         setContent(response.data.blog.content);
-        setPhoto(response.data.blog.photoPath);
+        setPhoto(response.data.blog.photo);
       }
     })();
   }, []);

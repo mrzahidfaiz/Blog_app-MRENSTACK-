@@ -25,6 +25,7 @@ function useAutoLogin() {
             email: response.data.user.email,
             name: response.data.user.name,
             auth: response.data.auth,
+            username: response.data.user.username
           };
 
           dispatch(setUser(user));

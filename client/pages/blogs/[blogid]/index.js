@@ -24,12 +24,11 @@ const index = () => {
       const blogResponse = await getById(blogid);
       if (blogResponse.status === 200) {
         setBlogOwner(username === blogResponse.data.blog.authorUsername);
-        console.log(blogResponse);
         setBlog(blogResponse.data.blog);
       } 
       const commentResponse = await getCommentById(blogid);
       if(commentResponse.status === 200) {
-        setComments(commentResponse.data.data);
+        setComments(commentResponse.data.comments);
       }
     };
 
@@ -56,7 +55,7 @@ const index = () => {
     if(response.status === 201){
       setComment('');
       setReload(!reload);
-      console.log(response.data.mesage);
+      alert(response.data.message);
     } else if(response.code === 'ERR_BAD_REQUEST'){
       console.log(response.response.data.mesage);
     }

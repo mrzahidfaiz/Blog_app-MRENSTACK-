@@ -4,6 +4,7 @@ const fs = require("fs");
 const { BACKEND_SERVER_PATH } = require("../config/index");
 const BlogDTO = require("../dto/blog");
 const BlogDetailDTO = require("../dto/blogDetail");
+const Comment = require("../models/comment");
 
 const mongodbIdPattren = /^[0-9a-fA-F]{24}$/;
 
@@ -169,6 +170,8 @@ const blogController = {
 
     try {
       await Blog.deleteOne({ _id: id });
+
+      await Comment.deleteMany({blog: id});
     } catch (error) {
       return next(error);
     }
