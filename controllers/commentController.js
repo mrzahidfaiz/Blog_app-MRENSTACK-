@@ -51,11 +51,15 @@ const commentController = {
         }
 
         const CommentsDto = [];
-
-        for(let i = 0; i < comments.lenght; i++){
+        try {
+            for(let i = 0; i < comments.lenght; i++){
             const dto = new CommentDTO(comments[i]);
             CommentsDto.push(dto);
         }
+        } catch (error) {
+            return next(error)
+        }
+        
 
         return res.status(200).json({data: CommentsDto});
 

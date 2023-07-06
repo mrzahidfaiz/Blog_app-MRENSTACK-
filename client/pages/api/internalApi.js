@@ -8,8 +8,6 @@ const api = axios.create({
   },
 });
 
-
-
 export const register = async (data) => {
   let response;
   try {
@@ -90,10 +88,30 @@ export const deleteById = async (id) => {
   return response;
 };
 
+export const createComment = async (data) => {
+  let response;
+  try {
+    response = await api.post("/comment", data);
+  } catch (error) {
+    return error;
+  }
+  return response;
+};
+
+export const getCommentById = async (id) => {
+  let response;
+  try {
+    response = await api.get(`/comment/${id}`);
+  } catch (error) {
+    return error;
+  }
+  return response;
+};
+
 api.interceptors.response.use(
   (config) => {
     return config;
-  },
+  }
   // async (error) => {
   //   let originalReq = error.config;
 
