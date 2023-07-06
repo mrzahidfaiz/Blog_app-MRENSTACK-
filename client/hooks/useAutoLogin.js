@@ -12,7 +12,7 @@ function useAutoLogin() {
     (async function autoLoginApiCall() {
       try {
         const response = await axios.get(
-          `http://localhost:8000/refresh`,
+          `${process.env.BACKEND_SERVRE_PATH}/refresh`,
           {
             withCredentials: true,
           }

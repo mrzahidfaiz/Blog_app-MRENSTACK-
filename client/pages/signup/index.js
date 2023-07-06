@@ -47,6 +47,7 @@ const index = () => {
       alert(response.data.message);
       navigate.push("/");
     } else if (response.code === "ERR_BAD_REQUEST") {
+      console.log(response);
       setError(response.response.data.message);
     }
   };

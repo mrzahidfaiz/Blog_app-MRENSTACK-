@@ -46,7 +46,7 @@ const index = () => {
 
       navigate.push('/blogs');
     }else if(response.code === 'ERR_BAD_REQUEST'){
-      console.log(response.response);
+      console.log("here",response);
       setError(response.response.data.message)
     }
   }

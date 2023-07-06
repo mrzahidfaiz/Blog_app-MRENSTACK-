@@ -7,7 +7,8 @@ module.exports = nextConfig
 
 const config = {
   env: {
-    API_KEY: process.env.API_KEY
+    API_KEY: process.env.API_KEY,
+    BACKEND_SERVRE_PATH: process.env.BACKEND_SERVRE_PATH
   }
 };
 

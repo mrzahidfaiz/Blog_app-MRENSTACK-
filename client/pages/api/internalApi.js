@@ -1,12 +1,14 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost:8000", // working on env later
+  baseURL: process.env.BACKEND_SERVRE_PATH,
   withCredentials: true,
   headers: {
     "Content-Type": "application/json",
   },
 });
+
+
 
 export const register = async (data) => {
   let response;
@@ -89,7 +91,27 @@ export const deleteById = async (id) => {
 };
 
 api.interceptors.response.use(
-  (response) => {
-    return response
+  (config) => {
+    return config;
   },
-)
+  // async (error) => {
+  //   let originalReq = error.config;
+
+  //   if (
+  //     (response.status === 401 || response.status === 500) &&
+  //     originalReq &&
+  //     !originalReq._isRetry
+  //   ) {
+  //     originalReq = true;
+
+  //     try {
+  //       await axios.get("http://localhost:8000/refresh", {
+  //         withCredentials: true,
+  //       });
+  //       return api.request(originalReq);
+  //     } catch (error) {
+  //       return error;
+  //     }
+  //   }
+  // }
+);
