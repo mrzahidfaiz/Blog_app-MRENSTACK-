@@ -4,3 +4,11 @@ const nextConfig = {
 }
 
 module.exports = nextConfig
+
+const config = {
+  env: {
+    API_KEY: process.env.API_KEY
+  }
+};
+
+module.exports = config;

@@ -44,7 +44,7 @@ const index = () => {
       }
       dispatch(setUser(user));
 
-      navigate.push('/');
+      navigate.push('/blogs');
     }else if(response.code === 'ERR_BAD_REQUEST'){
       console.log(response.response);
       setError(response.response.data.message)

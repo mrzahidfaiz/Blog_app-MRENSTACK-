@@ -18,6 +18,7 @@ export default function Navbar() {
     const response = await logout();
     if (response.status === 200) {
       dispatch(logoutUser());
+      router.push('/');
     } else if (response.code === "ERR_BAD_REQUEST") {
       console.log(response.response.data.errormessage);
     }

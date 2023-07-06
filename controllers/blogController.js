@@ -92,9 +92,9 @@ const blogController = {
       return next(error);
     }
 
-    // const BlogDetailDto = new BlogDetailDTO(blog);
+    const BlogDetailDto = new BlogDetailDTO(blog);
 
-    return res.status(200).json({ blog: blog });
+    return res.status(200).json({ blog: BlogDetailDto });
   },
   async update(req, res, next) {
     const updateBlogSchema = Joi.object({
