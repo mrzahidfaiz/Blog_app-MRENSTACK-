@@ -1,13 +1,13 @@
-class BlogDetailDTO {
+class BlogDetailDTO{
     constructor(blog){
         this._id = blog._id;
-        this.title = blog.title;
-        this.description = blog.description;
         this.content = blog.content;
-        this.photoPath = blog.photoPath;
-        this.authorusername = blog.author.username;
-        this.authorname = blog.author.name;
+        this.title = blog.title;
+        this.photo = blog.photoPath;
+        this.createdAt = blog.createdAt;
+        this.authorName = blog.author.name;
+        this.authorUsername = blog.author.username;
     }
-};
+}
 
 module.exports = BlogDetailDTO;
