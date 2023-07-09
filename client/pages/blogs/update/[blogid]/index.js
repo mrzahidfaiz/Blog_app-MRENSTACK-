@@ -25,7 +25,7 @@ const index = () => {
         setTitle(response.data.blog.title);
         setDescription(response.data.blog.description);
         setContent(response.data.blog.content);
-        setPhoto(response.data.blog.photo);
+        setPhoto(response.data.blog.photo[0].secure_url);
         setCategory(response.data.blog.category);
       }
     })();

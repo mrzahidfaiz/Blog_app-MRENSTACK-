@@ -81,7 +81,7 @@ const index = () => {
                 </p>
               </div>
               <img
-                src={blog.photo}
+                src={blog.photo[0].secure_url}
                 className="w-full object-cover lg:rounded"
                 style={{ height: "28em" }}
               />
@@ -94,7 +94,7 @@ const index = () => {
                 <div className="p-4 border-t border-b md:border md:rounded">
                   <div className="flex py-2">
                     <img
-                      src={blog.photo}
+                      src={blog.photo[0].secure_url}
                       className="h-10 w-10 rounded-full mr-2 object-cover"
                     />
                     <div>

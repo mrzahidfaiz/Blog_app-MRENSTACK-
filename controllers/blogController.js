@@ -1,10 +1,17 @@
 const Joi = require("joi");
 const Blog = require("../models/blog");
 const fs = require("fs");
-const { BACKEND_SERVER_PATH } = require("../config/index");
+const { BACKEND_SERVER_PATH, CLOUD_NAME, CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET } = require("../config/index");
 const BlogDTO = require("../dto/blog");
 const BlogDetailDTO = require("../dto/blogDetail");
 const Comment = require("../models/comment");
+const cloudinary = require('cloudinary').v2;
+
+cloudinary.config({
+  cloud_name: CLOUD_NAME,
+  api_key: CLOUDINARY_API_KEY,
+  api_secret: CLOUDINARY_API_SECRET
+})
 
 const mongodbIdPattren = /^[0-9a-fA-F]{24}$/;
 
@@ -26,18 +33,30 @@ const blogController = {
 
     const { title, content, author, photo, description, category } = req.body;
 
-    const buffer = Buffer.from(
-      photo.replace(/^data:image\/(png|jgp|jpeg);base64,/, ""),
-      "base64"
-    );
+    // const buffer = Buffer.from(
+    //   photo.replace(/^data:image\/(png|jgp|jpeg);base64,/, ""),
+    //   "base64"
+    // );
 
-    const imagePath = `${Date.now()}_${author}.png`;
+    // const imagePath = `${Date.now()}_${author}.png`;
 
+    let photoPath;
     try {
-      fs.writeFileSync(`upload/${imagePath}`, buffer);
+       const response = await cloudinary.uploader.upload(photo, {
+        folder: 'blogs'
+       })
+
+        photoPath = {
+        public_id: response.public_id,
+        secure_url: response.secure_url
+       }
+
+      // console.log("Result",photoPath)
+      // fs.writeFileSync(`upload/${imagePath}`, buffer);
     } catch (error) {
       return next(error);
     }
+
 
     let blog;
     try {
@@ -47,7 +66,7 @@ const blogController = {
         content: content,
         author: author,
         category, category,
-        photoPath: `${BACKEND_SERVER_PATH}/upload/${imagePath}`,
+        photoPath: photoPath,
       });
 
       blog = await newBlog.save();
@@ -73,6 +92,10 @@ const blogController = {
       const dto = new BlogDTO(blogs[i]);
       allBlogs.push(dto);
     }
+    // for (let i = 0; i < blogs.length; i++) {
+    //   const dto =blogs[i];
+    //   allBlogs.push(dto);
+    // }
 
     return res.status(200).json({ blog: allBlogs });
   },
@@ -124,22 +147,41 @@ const blogController = {
       return next(error);
     }
 
+    // console.log(blog.photoPath[0].public_id);
+
+    const oldPhoto = blog.photoPath[0].public_id;
+
+    try {
+      await cloudinary.uploader.destroy(oldPhoto);
+    } catch (error) {
+      return next(error);
+    }
+
     if (photo) {
-      let previousPhoto = blog.photoPath;
-      previousPhoto = previousPhoto.split("/").at(-1);
+      // let previousPhoto = blog.photoPath;
+      // previousPhoto = previousPhoto.split("/").at(-1);
 
       // delete
-      fs.unlinkSync(`upload/${previousPhoto}`);
+      // fs.unlinkSync(`upload/${previousPhoto}`);
       // Buffer from client
-      const buffer = Buffer.from(
-        photo.replace(/^data:image\/(png|jgp|jpeg);base64,/, ""),
-        "base64"
-      );
-      // allot a random name
-      const imagePath = `${Date.now()}_${author}.png`;
-      // store locally in storage folder
+      // const buffer = Buffer.from(
+      //   photo.replace(/^data:image\/(png|jgp|jpeg);base64,/, ""),
+      //   "base64"
+      // );
+      // // allot a random name
+      // const imagePath = `${Date.now()}_${author}.png`;
+      // // store locally in storage folder
+      let photoPath;
       try {
-        fs.writeFileSync(`upload/${imagePath}`, buffer);
+        const response = await cloudinary.uploader.upload(photo, {
+          folder: 'blogs'
+        })
+
+         photoPath = {
+          public_id: response.public_id,
+          secure_url: response.secure_url
+        }
+        // fs.writeFileSync(`upload/${imagePath}`, buffer);
       } catch (error) {
         return next(error);
       }
@@ -150,7 +192,7 @@ const blogController = {
           description,
           content,
           category,
-          photoPath: `${BACKEND_SERVER_PATH}/upload/${imagePath}`,
+          photoPath: photoPath,
         }
       );
     } else {
@@ -172,7 +214,20 @@ const blogController = {
 
     const { id } = req.params;
 
+    let blog;
     try {
+      blog = await Blog.findOne({_id: id})
+    } catch (error) {
+      return next(error)
+    }
+
+    const oldPhoto = blog.photoPath[0].public_id;
+     
+
+    try {
+
+      await cloudinary.uploader.destroy(oldPhoto);
+
       await Blog.deleteOne({ _id: id });
 
       await Comment.deleteMany({blog: id});
