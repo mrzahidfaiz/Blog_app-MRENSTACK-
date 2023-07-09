@@ -15,7 +15,7 @@ const index = () => {
         setBlogs(response.data.blog);
       } else if (response.code === "ERR_BAD_REQUEST") {
         
-        alert(response.response.data.message)
+        // alert(response.response.data.message)
         router.push('/login')
       }
     })();

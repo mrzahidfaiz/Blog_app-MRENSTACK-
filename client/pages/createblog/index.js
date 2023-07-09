@@ -40,7 +40,7 @@ const index = () => {
       router.push("/blogs");
     }
     if (response.code === "ERR_BAD_REQUEST") {
-      alert(response.response.statusText);
+      // alert(response.response.statusText);
       alert("User must be login first");
     }
   };

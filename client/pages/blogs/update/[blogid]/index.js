@@ -78,7 +78,7 @@ const index = () => {
   return (
     <div className="p-10">
       <h1 className="text-center text-3xl">Update Blog</h1>
-      <div className="flex flex-col gap-4 content-center mt-16">
+      <div className="flex flex-col gap-4 content-center mt-6">
         <div>
           <label
             htmlFor="message"

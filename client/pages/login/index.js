@@ -51,7 +51,7 @@ const index = () => {
     }
   }
   return (
-    <div className="min-h-screen flex items-center justify-center bg-blue-400">
+    <div className="h-screen flex items-center justify-center bg-blue-400">
       <div className="bg-white md:p-16 xs:p-4 rounded shadow-2xl md:w-2/4 xs:w-full ">
         <h2 className="text-3xl font-bold mb-10 text-gray-800">
           Login Your Account

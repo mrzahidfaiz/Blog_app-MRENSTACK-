@@ -11,7 +11,7 @@ const Comment = ({comment}) => {
         </div>
         <div className="flex-1 border rounded-lg px-4 py-2 sm:px-6 sm:py-4 leading-relaxed">
           <strong>{comment.auhtorUsername}</strong>
-          <span className="text-xs text-gray-400 ml-2">3:34 PM</span>
+          <span className="text-xs text-gray-400 ml-2">{comment.createdAt}</span>
           <p className="text-sm">
           {comment.content}
           </p>

@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import Footer from "@/components/Footer";
 import Input from "@/components/Input";
 import CommentList from "@/components/CommentList";
+import Loading from "@/components/Loading";
 
 const index = () => {
   const router = useRouter();
@@ -55,12 +56,16 @@ const index = () => {
     if(response.status === 201){
       setComment('');
       setReload(!reload);
-      alert(response.data.message);
+      // alert(response.data.message);
     } else if(response.code === 'ERR_BAD_REQUEST'){
-      console.log(response.response.data.mesage);
+      alert(response.response.data.mesage);
     }
   }
   // console.log(blog);
+
+  if(blog.length === 0 ) {
+    return <Loading />
+  }
   return (
     <>
       <>
@@ -71,12 +76,9 @@ const index = () => {
                 <h2 className="text-4xl font-semibold text-gray-800 leading-tight">
                   {blog.title}
                 </h2>
-                <a
-                  href=""
-                  className="py-2 text-green-700 inline-flex items-center justify-center mb-2"
-                >
+                <p className="py-2 text-green-700 inline-flex items-center justify-center mb-2">
                   {blog.category}
-                </a>
+                </p>
               </div>
               <img
                 src={blog.photo}
