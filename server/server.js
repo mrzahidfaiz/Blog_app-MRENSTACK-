@@ -19,7 +19,13 @@ const corsOption = {
 
 app.use("/upload", express.static("upload"));
 
-app.use(cors(corsOption));
+app.use(cors(
+  {
+    origin: ["https://blog-app-mrenstack-client.vercel.app"],
+    methods: ["POST", "GET", "PUT", "DELETE"],
+    credentials: true
+  }
+));
 
 app.use(router);
 
