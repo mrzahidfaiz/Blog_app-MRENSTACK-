@@ -31,7 +31,7 @@ app.get('/' ,(req, res) => {
   res.json('Hello');
 })
 
-app.use(router);
+// app.use(router);
 
 app.use(errorHandler);
 
