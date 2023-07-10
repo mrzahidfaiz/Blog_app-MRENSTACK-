@@ -20,7 +20,7 @@ router.get('/refresh', refresh);
 
 router.post('/blog',auth, create);
 
-router.get('/blog/all', getAll);
+router.get('/blog/all',auth, getAll);
 
 router.get('/blog/:id',auth, getById);
 
