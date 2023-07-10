@@ -1,6 +1,6 @@
 const express = require("express");
 const { PORT, FRONT_END_CLIENT_PATH } = require("./config/index");
-const router = require("./routes/routes");
+const router = require("./routes");
 const errorHandler = require("./middlewares/errorHandler");
 const dbConnection = require("./database");
 const cors = require("cors");
