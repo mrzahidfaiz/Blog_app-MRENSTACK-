@@ -12,7 +12,7 @@ function useAutoLogin() {
     (async function autoLoginApiCall() {
       try {
         const response = await axios.get(
-          `${process.env.BACKEND_SERVRE_PATH}/refresh`,
+          'https://blog-app-server-kappa.vercel.app/refresh',
           {
             withCredentials: true,
           }
