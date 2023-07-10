@@ -15,7 +15,7 @@ const index = () => {
         setBlogs(response.data.blog);
       } else if (response.code === "ERR_BAD_REQUEST") {
         
-        // alert(response.response.data.message)
+        alert(response.response.data.message)
         router.push('/login')
       }
     })();
@@ -27,7 +27,7 @@ const index = () => {
     return <Loading />
   }
 
-  console.log(blogs);
+  // console.log(blogs);
   return (
     <section className="text-gray-600 body-font">
       <div className="container px-5 py-24 mx-auto">
