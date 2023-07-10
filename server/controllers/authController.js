@@ -80,13 +80,11 @@ const authController = {
     res.cookie("accessToken", accessToken, {
       maxAge: 1000 * 60 * 60 * 24,
       httpOnly: true,
-      domain: 'https://blog-app-mrenstack.vercel.app'
     });
 
     res.cookie("refreshToken", refreshToken, {
       maxAge: 1000 * 60 * 60 * 24,
       httpOnly: true,
-      domain: 'https://blog-app-mrenstack.vercel.app'
     });
 
     const UserDto = new UserDTO(user);
@@ -162,13 +160,11 @@ const authController = {
     res.cookie("accessToken", accessToken, {
       maxAge: 1000 * 60 * 60 * 24,
       httpOnly: true,
-      domain: 'https://blog-app-mrenstack.vercel.app'
     });
 
     res.cookie("refreshToken", refreshToken, {
       maxAge: 1000 * 60 * 60 * 24,
       httpOnly: true,
-      domain: 'https://blog-app-mrenstack.vercel.app'
     });
 
     const UserDto = new UserDTO(user);
@@ -233,13 +229,11 @@ const authController = {
       res.cookie("accessToken", accessToken, {
         maxAge: 1000 * 60 * 60 * 24,
         httpOnly: true,
-        domain: 'https://blog-app-mrenstack.vercel.app'
       });
 
       res.cookie("refreshToken", refreshToken, {
         maxAge: 1000 * 60 * 60 * 24,
         httpOnly: true,
-        domain: 'https://blog-app-mrenstack.vercel.app'
       });
     } catch (error) {
       return next(error);
