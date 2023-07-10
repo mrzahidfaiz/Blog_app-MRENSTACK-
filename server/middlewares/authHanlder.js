@@ -9,7 +9,7 @@ const auth = async (req, res, next) => {
     if (!accessToken || !refreshToken) {
       const error = {
         status: 401,
-        message: "Unauthorized ***",
+        message: "Unauthorized",
       };
       return next(error);
     }

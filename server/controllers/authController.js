@@ -79,12 +79,12 @@ const authController = {
 
     res.cookie("accessToken", accessToken, {
       maxAge: 1000 * 60 * 60 * 24,
-      
+      httpOnly: false
     });
 
     res.cookie("refreshToken", refreshToken, {
       maxAge: 1000 * 60 * 60 * 24,
-      
+      httpOnly: false
     });
 
     const UserDto = new UserDTO(user);
@@ -159,12 +159,12 @@ const authController = {
 
     res.cookie("accessToken", accessToken, {
       maxAge: 1000 * 60 * 60 * 24,
-      
+      httpOnly: false
     });
 
     res.cookie("refreshToken", refreshToken, {
       maxAge: 1000 * 60 * 60 * 24,
-      
+      httpOnly: false
     });
 
     const UserDto = new UserDTO(user);
@@ -228,12 +228,12 @@ const authController = {
 
       res.cookie("accessToken", accessToken, {
         maxAge: 1000 * 60 * 60 * 24,
-        
+        httpOnly: false
       });
 
       res.cookie("refreshToken", refreshToken, {
         maxAge: 1000 * 60 * 60 * 24,
-        
+        httpOnly: false
       });
     } catch (error) {
       return next(error);
