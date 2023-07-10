@@ -20,7 +20,8 @@ const authController = {
         .messages({
           "string.min": "Must have at least 8 characters",
           "object.regex": "Must have at least 8 characters",
-          "string.pattern.base": "One UpperCase One LowerCase and One Number Required!"
+          "string.pattern.base":
+            "One UpperCase One LowerCase and One Number Required!",
         })
         .required(),
       confirmpassword: Joi.ref("password"),
@@ -80,11 +81,15 @@ const authController = {
     res.cookie("accessToken", accessToken, {
       maxAge: 1000 * 60 * 60 * 24,
       httpOnly: true,
+      secure,
+      sameSite: secure ? "None" : "Lax",
     });
 
     res.cookie("refreshToken", refreshToken, {
       maxAge: 1000 * 60 * 60 * 24,
       httpOnly: true,
+      secure,
+      sameSite: secure ? "None" : "Lax",
     });
 
     const UserDto = new UserDTO(user);
@@ -99,11 +104,15 @@ const authController = {
   async login(req, res, next) {
     const userLoginSchema = Joi.object({
       username: Joi.string().min(6).max(25).required(),
-      password: Joi.string().pattern(passwordPattren).messages({
-        "string.min": "Must have at least 8 characters",
-        "object.regex": "Must have at least 8 characters",
-        "string.pattern.base": "One UpperCase One LowerCase and One Number Required!"
-      }).required(),
+      password: Joi.string()
+        .pattern(passwordPattren)
+        .messages({
+          "string.min": "Must have at least 8 characters",
+          "object.regex": "Must have at least 8 characters",
+          "string.pattern.base":
+            "One UpperCase One LowerCase and One Number Required!",
+        })
+        .required(),
     });
 
     const { error } = userLoginSchema.validate(req.body);
@@ -160,11 +169,15 @@ const authController = {
     res.cookie("accessToken", accessToken, {
       maxAge: 1000 * 60 * 60 * 24,
       httpOnly: true,
+      secure,
+      sameSite: secure ? "None" : "Lax",
     });
 
     res.cookie("refreshToken", refreshToken, {
       maxAge: 1000 * 60 * 60 * 24,
       httpOnly: true,
+      secure,
+      sameSite: secure ? "None" : "Lax",
     });
 
     const UserDto = new UserDTO(user);
@@ -195,7 +208,7 @@ const authController = {
 
     let id;
     try {
-      id =   JWTService.verifyRefreshToken(originalRefreshToken)._id;
+      id = JWTService.verifyRefreshToken(originalRefreshToken)._id;
     } catch (e) {
       const error = {
         status: 401,
@@ -229,11 +242,15 @@ const authController = {
       res.cookie("accessToken", accessToken, {
         maxAge: 1000 * 60 * 60 * 24,
         httpOnly: true,
+        secure,
+        sameSite: secure ? "None" : "Lax",
       });
 
       res.cookie("refreshToken", refreshToken, {
         maxAge: 1000 * 60 * 60 * 24,
         httpOnly: true,
+        secure,
+        sameSite: secure ? "None" : "Lax",
       });
     } catch (error) {
       return next(error);
@@ -248,7 +265,7 @@ const authController = {
 
     const UserDto = new UserDTO(user);
 
-    res.status(200).json({ user: UserDto , auth: true});
+    res.status(200).json({ user: UserDto, auth: true });
   },
 };
 
