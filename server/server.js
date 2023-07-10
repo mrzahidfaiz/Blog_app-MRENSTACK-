@@ -12,18 +12,19 @@ dbConnection();
 
 app.use(express.json({ limit: "20mb" }));
 app.use(cookieParser());
-const corsOption = {
-  origin: FRONT_END_CLIENT_PATH,
-  credentials: true,
-};
+// const corsOption = {
+//   origin: FRONT_END_CLIENT_PATH,
+//   credentials: true,
+// };
 
-app.use("/upload", express.static("upload"));
+// app.use("/upload", express.static("upload"));
 
 app.use(cors(
   {
-    origin: ["https://blog-app-mrenstack-client.vercel.app"],
-    methods: ["POST", "GET", "PUT", "DELETE"],
-    credentials: true
+    origin: function (origin, callback) {
+      return callback(null, true);
+    },
+    optionsSuccessStatus: 200,
   }
 ));
 
