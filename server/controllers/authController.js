@@ -80,11 +80,13 @@ const authController = {
     res.cookie("accessToken", accessToken, {
       maxAge: 1000 * 60 * 60 * 24,
       httpOnly: true,
+      sameSite: 'none'
     });
 
     res.cookie("refreshToken", refreshToken, {
       maxAge: 1000 * 60 * 60 * 24,
       httpOnly: true,
+      sameSite: 'none'
     });
 
     const UserDto = new UserDTO(user);
@@ -160,11 +162,13 @@ const authController = {
     res.cookie("accessToken", accessToken, {
       maxAge: 1000 * 60 * 60 * 24,
       httpOnly: true,
+      sameSite: 'none'
     });
 
     res.cookie("refreshToken", refreshToken, {
       maxAge: 1000 * 60 * 60 * 24,
       httpOnly: true,
+      sameSite: 'none'
     });
 
     const UserDto = new UserDTO(user);
@@ -175,7 +179,7 @@ const authController = {
   },
 
   async logout(req, res, next) {
-    // console.log(req);
+    console.log(req);
     const { refreshToken } = req.cookies;
 
     try {
@@ -229,11 +233,13 @@ const authController = {
       res.cookie("accessToken", accessToken, {
         maxAge: 1000 * 60 * 60 * 24,
         httpOnly: true,
+        sameSite: 'none'
       });
 
       res.cookie("refreshToken", refreshToken, {
         maxAge: 1000 * 60 * 60 * 24,
         httpOnly: true,
+        sameSite: 'none'
       });
     } catch (error) {
       return next(error);
