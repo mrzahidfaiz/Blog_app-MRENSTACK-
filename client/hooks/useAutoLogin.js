@@ -12,7 +12,7 @@ function useAutoLogin() {
     (async function autoLoginApiCall() {
       try {
         const response = await axios.get(
-          'https://blog-app-server-kappa.vercel.app/refresh',
+          'https://blog-app-mrenstack-nine.vercel.app/refresh',
           {
             withCredentials: true,
           }
