@@ -5,6 +5,8 @@ const UserDTO = require("../dto/user");
 const auth = async (req, res, next) => {
   try {
     const { accessToken, refreshToken } = req.cookies;
+    console.log('accessToken', accessToken);
+    console.log('refreshToken', refreshToken)
 
     if (!accessToken || !refreshToken) {
       const error = {

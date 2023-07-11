@@ -20,11 +20,10 @@ app.use(cookieParser());
 // app.use("/upload", express.static("upload"));
 
 app.use(cors(
-  {
-    credentials: true,
+  { 
     origin: ["https://blog-app-mrenstack.vercel.app"],
     methods: ["POST", "GET", "PUT", "DELETE"],
-    
+    credentials: true,
   }
 ));
 
