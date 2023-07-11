@@ -22,7 +22,7 @@ app.use(cookieParser());
 app.use(cors(
   { 
     origin: ["https://blog-app-mrenstack.vercel.app"],
-    methods: ["POST", "GET", "PUT", "DELETE"],
+    methods: ["POST", "GET", "HEAD", "PUT", "PATCH", "DELETE"],
     credentials: true,
   }
 ));
